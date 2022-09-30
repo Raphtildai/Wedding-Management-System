@@ -32,8 +32,7 @@
                         <?php
                             if(isset($_POST['approve'])){
                                 $id = $_POST['id'];
-                                $population = $_POST['population'];
-                                $budget = $_POST['budget'];
+                                $capacity = $_POST['capacity'];
                                 $cost = $_POST['cost'];
                                 $location = $_POST['location'];
                                 $organizer = $_POST['organizer'];
@@ -41,8 +40,7 @@
                                 echo '<h5 class="font-weight-light my-4">
                                     Event Organizer: '."$organizer".'<br> 
                                     Date Booked: '."$date".'<br>
-                                    Expected Population: '."$population".'<br>
-                                    Budget planed: '."$budget".'<br> 
+                                    Capacity/Type: '."$capacity".'<br>
                                     Total cost: '."$cost".'</br>
                                     Venue of the Event: '."$location".'
                                 </h5>';

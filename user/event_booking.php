@@ -17,13 +17,14 @@
                                 <div class="form-group">
                                 <label for="categories">Type of Service</label>
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <select name="category" id="categories" class = "form-control">
+                                        <select name="sname" id="services" class = "form-control" onchange="displayCategories(this)">
+                                            <option value="">Please Select</option>
                                             <?php 
                                                 $conn = new mysqli('localhost', 'root', '', 'wedding');
                                                 if ($conn->connect_error) {
                                                     die("Connection failed: " . $conn->connect_error);
                                                 }
-                                                $sql = 'SELECT * from events';
+                                                $sql = 'SELECT event_name, event_id from events';
                                                 if (mysqli_query($conn, $sql)) {
                                                     echo "";
                                                 } else {
@@ -44,9 +45,6 @@
                                                     $eid = $_SESSION['eid'];
                                                     echo $eid;
                                                     $count++;}
-                                                } else {
-                                                    echo 'No Services found';
-                                                }
                                             ?>
                                         </select>
                                     </div>
@@ -55,15 +53,16 @@
                                 <!-- This outputs the categories of the selected event -->
                                 <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="Service categories">Select Category<?php echo $eid ?></label>
+                                <label for="Service categories" id = "catlabel" class = "d-none">Select Category</label>
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <select name="cname" id="cname" class = "form-control">
+                                        <select name="cname" id="cname" class = "form-control d-none">
+                                                <option value="">Please Select</option>
                                             <?php 
                                                 $conn = new mysqli('localhost', 'root', '', 'wedding');
                                                 if ($conn->connect_error) {
                                                     die("Connection failed: " . $conn->connect_error);
                                                 }
-                                                $sql1 = 'SELECT * from event_categories WHERE event_id = $eid';
+                                                $sql1 = 'SELECT category_id, category_cost, category_id, category_name, max_number_of_people FROM event_categories';
                                                 if (mysqli_query($conn, $sql1)) {
                                                     echo "";
                                                 } else {
@@ -74,22 +73,17 @@
                                                 if (mysqli_num_rows($res) > 0) {
                                                 // output data of each row
                                                 while($row1 = mysqli_fetch_assoc($res)) { ?>
-                                                    <option value="<?php echo $row1['category_id'] ?>"><?php echo $row1['category_name'] ?></option>
+                                                    <option id = "cid" value="<?php echo $row1['category_id'] ?>"><?php echo $row1['category_name']. ' '. $row1['max_number_of_people'] ?></option>
                                                 <?php
                                                     $count++;}
                                                 } else {
                                                     echo 'No Service Categories found';
                                                 }
+                                            } else {
+                                                echo 'No Services found';
+                                            }
                                             ?>
                                         </select>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="categories">Enter number of people expected</label>
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" name="npeople" type="number" placeholder="People expected" required/>
                                     </div>
                                 </div>
                                 </div>
@@ -108,7 +102,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input class="form-control" name="budget" type="number" placeholder="Enter budget expected" required/>
-                                    <label for="budget">Working Budget for the Wedding</label>
+                                    <label for="budget">Total Cost</label>
                                 </div>
                             </div>
                             </div>
@@ -128,6 +122,37 @@
         </div>
     </div>
 </main>
+<script>
+    function displayCategories(answer){
+        console.log(answer.value);
+        if(answer.value != ""){
+            document.getElementById('catlabel').classList.remove('d-none');
+            document.getElementById('cname').classList.remove('d-none');
+            return answer,value;
+        }else{
+            document.getElementById('catlabel').classList.add('d-none');
+            document.getElementById('cname').classList.add('d-none');
+        }
+
+    }
+</script>
+
+<!-- <script>
+    function valid(){
+        var date = document.forms[0][3].value;
+        if(date == ""){
+            alert('Date cannot be empty');
+            return false;
+        }else if(date < Date().getTime()){
+            alert('DAte cannot be past date');
+        }else if(date == Date().getTime()){
+            alert('You cannot book event on today\'s date');
+        }else {
+            return true;
+        }
+        
+    }
+</script> -->
 
 <?php
     include 'includes/scripts.php';

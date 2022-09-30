@@ -17,30 +17,36 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Event Category</th>
+                            <th>S.N</th>
+                            <th>Service Name</th>
+                            <th>Category Name</th>
                             <th>Customer Name</th>
                             <th>Description</th>
-                            <th>Population</th>
-                            <th>Budget(KSH.)</th>
+                            <th>Capacity/Type</th>
+                            <th>Cost(KSH.)</th>
                             <th>Date Booked</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>ID</th>
-                            <th>Event Category</th>
+                            <th>S.N</th>
+                            <th>Service Name</th>
+                            <th>Category Name</th>
                             <th>Customer Name</th>
                             <th>Description</th>
-                            <th>Population</th>
-                            <th>Budget(KSH.)</th>
+                            <th>Capacity/Type</th>
+                            <th>Cost(KSH.)</th>
                             <th>Date Booked</th>
                             <th>Status</th>
                         </tr>
                     </tfoot>
                     <?php 
-                        $sql = 'SELECT * FROM `bookings` INNER join events ON bookings.event_id = events.event_id INNER JOIN users ON users.customer_id = bookings.customer_id';
+                        $sql = 'SELECT * FROM `bookings` INNER join events 
+                        ON bookings.event_id = events.event_id INNER JOIN users 
+                        ON users.customer_id = bookings.customer_id INNER JOIN event_categories
+                        ON event_categories.category_id = bookings.category_id
+                        ORDER BY(status)';
                         if (mysqli_query($conn, $sql)) {
                         echo "";
                         } else {
@@ -55,32 +61,37 @@
                     <tbody>
                         <tr>
                             <th>
-                                <?php echo $row['booking_id']; ?>
+                                <?php echo $count ?>
                             </th>
                             <td>
                                 <?php echo $row['event_name']; ?>
                             </td>
                             <td>
-                                <?php echo $row['fname']; ?>
+                                <?php echo $row['category_name']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['fname']. ' '. $row['lname']; ?>
                             </td>
                             <td>
                                 <?php echo $row['booking_description']; ?>
                             </td>
                             <td>
-                                <?php echo $row['population']; ?>
+                                <?php echo $row['max_number_of_people']; ?>
                             </td>
                             <td>
-                                <?php echo $row['budget']; ?>
+                                <?php echo $row['category_cost']; ?>
                             </td>
                             <td>
                                 <?php echo $row['date_booked']; ?>
                             </td>
                             <td>
-                                <?php
-                                    if($row['status'] == 1){
+                                <?php 
+                                    if($row['status'] == 0){
+                                        echo "<div class = "."btn-primary".">Pending</div>";
+                                    }else if($row['status'] == 1){
                                         echo "<div class = "."btn-success".">Approved</div>";
                                     }else{
-                                        echo "<div class = "."btn-primary".">Pending</div>";
+                                        echo "<div class = "."btn-danger".">Cancelled</div>";
                                     }
                                 ?>
                                 <!-- <button type="button" class="btn btn-success">Approve</button> -->

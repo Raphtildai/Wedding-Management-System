@@ -11,7 +11,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                My Approved Event Service
+                My Approved Service payments
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -49,7 +49,7 @@
                         ON users.customer_id = bookings.customer_id INNER JOIN payment 
                         ON bookings.booking_id = payment.booking_id INNER JOIN event_categories
                         ON event_categories.event_id = bookings.event_id
-                        WHERE (bookings.customer_id = '."$c_id".' AND status = 1 )';
+                        WHERE (bookings.customer_id = '."$c_id".' AND status = 1 AND event_categories.category_id = bookings.category_id)';
                         if (mysqli_query($conn, $sql)) {
                         echo "";
                         } else {
@@ -95,12 +95,20 @@
                                 <?php echo $row['date_paid']; ?>
                             </td>
                             <td>
-                                <form action="payment.php" method = "POST">
-                                    <input type="hidden" name = "id" value = "<?php echo $row['booking_id']?>">
-                                    <input type="hidden" name = "amount_already_paid" value = "<?php echo $row['amount']?>">
-                                    <input type="hidden" name = "amount" value = "<?php $cost = $row['category_cost'] - $row['discount']; echo $cost; ?>">
-                                    <input type = "submit" name = "payment" class="btn btn-success" value = "Proceed to PAY">
-                                </form>
+                                <?php
+                                    $cost = $row['category_cost'] - $row['discount'];
+                                    $bal = $cost - $row['amount'];
+                                    if($bal == 0){
+                                        echo "'".'<button type = "submit" class = "btn btn-primary">Payment Complete</button>'."'";
+                                    }else{?>
+                                        <form action="payment.php" method = "POST">
+                                            <input type="hidden" name = "id" value = "<?php echo $row['booking_id']?>">
+                                            <input type="hidden" name = "amount_already_paid" value = "<?php echo $row['amount']?>">
+                                            <input type="hidden" name = "amount" value = "<?php $cost = $row['category_cost'] - $row['discount']; echo $cost; ?>">
+                                            <input type = "submit" name = "payment" class="btn btn-success" value = "Proceed to PAY">
+                                        </form><?php
+                                    }
+                                ?>
                             </td>
                         </tr>
                     </tbody>

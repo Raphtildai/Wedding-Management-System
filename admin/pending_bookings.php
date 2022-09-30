@@ -20,30 +20,34 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>S.N</th>
                             <th>Event Category</th>
                             <th>Customer Name</th>
                             <th>Description</th>
-                            <th>Population</th>
-                            <th>Budget(KSH.)</th>
+                            <th>Capacity/Type</th>
+                            <th>Cost(KSH.)</th>
                             <th>Date Booked</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>ID</th>
+                            <th>S.N</th>
                             <th>Event Category</th>
                             <th>Customer Name</th>
                             <th>Description</th>
-                            <th>Population</th>
-                            <th>Budget(KSH.)</th>
+                            <th>Capacity/Type</th>
+                            <th>Cost(KSH.)</th>
                             <th>Date Booked</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
                     <?php 
-                        $sql = 'SELECT * FROM `bookings` INNER join events ON bookings.event_id = events.event_id INNER JOIN users ON users.customer_id = bookings.customer_id WHERE status = 0';
+                        $sql = 'SELECT * FROM `bookings` INNER JOIN events 
+                        ON bookings.event_id = events.event_id INNER JOIN users 
+                        ON users.customer_id = bookings.customer_id INNER JOIN event_categories
+                        ON bookings.category_id = bookings.category_id
+                        WHERE (status = 0 AND event_categories.category_id = bookings.category_id) ORDER BY(date_created)';
                         if (mysqli_query($conn, $sql)) {
                         echo "";
                         } else {
@@ -58,7 +62,7 @@
                     <tbody>
                     <tr>
                             <th>
-                                <?php echo $row['booking_id']; ?>
+                                <?php echo $count; ?>
                             </th>
                             <td>
                                 <?php echo $row['event_name']; ?>
@@ -70,10 +74,10 @@
                                 <?php echo $row['booking_description']; ?>
                             </td>
                             <td>
-                                <?php echo $row['population']; ?>
+                                <?php echo $row['max_number_of_people']; ?>
                             </td>
                             <td>
-                                <?php echo $row['budget']; ?>
+                                <?php echo $row['category_cost']; ?>
                             </td>
                             <td>
                                 <?php echo $row['date_booked']; ?>
@@ -84,9 +88,8 @@
                                     <input type="hidden" class="id" name="date" value = "<?php echo $row['date_booked']; ?>">
                                     <input type="hidden" class="organizer" name="organizer" value = "<?php echo $row['fname'] .' '. $row['lname']; ?>">
                                     <input type="hidden" class="location" name="location" value = "<?php echo $row['location_of_event']; ?>">
-                                    <input type="hidden" class="population" name="population" value = "<?php echo $row['population']; ?>">
-                                    <input type="hidden" class="budget" name="budget" value = "<?php echo $row['budget']; ?>">
-                                    <input type="hidden" class="cost" name="cost" value = "<?php $cost = $row['cost'] * $row['population']; echo $cost; ?>">
+                                    <input type="hidden" class="capacity" name="capacity" value = "<?php echo $row['max_number_of_people']; ?>">
+                                    <input type="hidden" class="cost" name="cost" value = "<?php $cost = $row['category_cost']; echo $cost; ?>">
                                     <input type="submit" name = "approve" value = "Approve" class="btn btn-success">
                                 </form>
                             </td>

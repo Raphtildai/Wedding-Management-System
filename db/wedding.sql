@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2022 at 08:51 PM
+-- Generation Time: Sep 29, 2022 at 07:58 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -52,9 +52,9 @@ INSERT INTO `admin` (`id`, `username`, `email`, `password`, `fname`, `lname`, `p
 
 CREATE TABLE `bookings` (
   `booking_id` int(11) NOT NULL,
-  `population` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `budget` int(11) NOT NULL,
   `discount` double NOT NULL DEFAULT '0',
   `booking_description` varchar(250) NOT NULL,
@@ -70,10 +70,18 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`booking_id`, `population`, `customer_id`, `event_id`, `budget`, `discount`, `booking_description`, `date_booked`, `location_of_event`, `status`, `approval_comment`, `payment_status`, `date_created`) VALUES
-(1, 100, 2, 1, 50000, 1000, 'We intend to have the event colorful and successful', '2022-09-02', '', 0, 'comment', 0, '2022-09-23 21:08:58'),
-(2, 200, 3, 2, 30000, 50000, 'I need a perfect event', '2022-09-25', 'Sinonin', 1, 'This is Great', 0, '2022-09-24 09:23:17'),
-(3, 200, 3, 3, 10000, 0, 'We would like to have you as our photographers that day and possibly live stream the event.', '2022-09-27', 'Wundanyi', 0, NULL, 0, '2022-09-25 12:07:10');
+INSERT INTO `bookings` (`booking_id`, `customer_id`, `event_id`, `category_id`, `budget`, `discount`, `booking_description`, `date_booked`, `location_of_event`, `status`, `approval_comment`, `payment_status`, `date_created`) VALUES
+(1, 2, 1, 0, 50000, 1000, 'We intend to have the event colorful and successful', '2022-09-02', '', 0, 'comment', 0, '2022-09-23 21:08:58'),
+(2, 3, 2, 0, 30000, 50000, 'I need a perfect event', '2022-09-25', 'Sinonin', 1, 'This is Great', 0, '2022-09-24 09:23:17'),
+(3, 3, 3, 11, 10000, 0, 'We would like to have you as our photographers that day and possibly live stream the event.', '2022-09-27', 'Wundanyi', 0, NULL, 0, '2022-09-25 12:07:10'),
+(4, 3, 1, 5, 3000, 0, 'I expect nothing less than the best\r\n', '2022-09-30', 'Wundanyi', 2, NULL, 0, '2022-09-29 12:21:11'),
+(5, 3, 1, 5, 2423, 1000, 'sdfsadfas', '2022-09-27', 'Wundanyi', 1, 'Only because you are our customer', 0, '2022-09-29 13:37:05'),
+(6, 3, 1, NULL, 3435, 0, 'aeasdas', '2022-09-27', 'Wundanyi', 0, NULL, 0, '2022-09-29 13:49:05'),
+(7, 3, 1, NULL, 23423, 0, 'sfsdfsd', '2022-09-27', 'Wundanyi', 0, NULL, 0, '2022-09-29 14:07:03'),
+(8, 3, 1, NULL, 244, 0, 'asdsdas', '2022-09-27', 'asdasdas', 0, NULL, 0, '2022-09-29 14:10:52'),
+(9, 3, 21, NULL, 435345, 0, 'sdfasfsfdf', '2022-09-30', 'Wundanyi', 0, NULL, 0, '2022-09-29 17:01:46'),
+(10, 3, 1, 5, 345345, 0, 'sdfdfsdf', '2022-09-30', 'Wundanyi', 2, NULL, 0, '2022-09-29 17:39:47'),
+(11, 7, 21, 11, 30000, 0, 'This will be an event for all the lecturers in the country', '2022-09-30', 'Uhuru Park', 0, NULL, 0, '2022-09-29 19:39:28');
 
 -- --------------------------------------------------------
 
@@ -147,7 +155,8 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`payment_id`, `booking_id`, `amount`, `payment_comment`, `date_paid`) VALUES
 (1, 2, 1000, 'I will pay the rest soon', '2022-09-25 12:57:46'),
-(2, 2, 1000, 'Additional amount', '2022-09-25 13:18:59');
+(2, 2, 1000, 'Additional amount', '2022-09-25 13:18:59'),
+(3, 5, 34000, 'Done my entire payment', '2022-09-29 19:06:48');
 
 -- --------------------------------------------------------
 
@@ -173,7 +182,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`customer_id`, `fname`, `lname`, `username`, `email`, `pnumber`, `residence`, `county`, `password`, `date_registered`) VALUES
-(3, 'Mary ', 'Mungali', 'mary', 'mary@gmail.com', 725341547, 'Kitui Central', 'Kitui', '$2y$10$BXXPy1lOJ99r6.kXHFv/bO6vX649BoNt6twG8ttf5vYH1m7uyfipa', '2022-09-23 11:53:14');
+(7, 'Tildai', 'Raphael', 'tildairaphael', 'raphaeltildai7@gmail.com', 725341547, 'Sinonin', 'Uasin Gishu', '$2y$10$djiy6T5PeF.pB/BCOmiOG.UFo3Qlz3flFQQdflAy2XeLc0gp5GUUm', '2022-09-29 19:35:44'),
+(3, 'Mary ', 'Mungali', 'mary', 'mary@gmail.com', 725341547, 'Kitui Central', 'Kitui', '$2y$10$BXXPy1lOJ99r6.kXHFv/bO6vX649BoNt6twG8ttf5vYH1m7uyfipa', '2022-09-23 11:53:14'),
+(6, 'Raphael', 'Tildai', 'raphtildai', 'raphaeltildai7@gmail.com', 725341547, 'Sinonin', 'Uasin Gishu', '$2y$10$95dfWWjHdG0VnMP7gdoA6uzgUvKYDgpE0HFNAvVBclAovZZWsPELu', '2022-09-29 19:31:26');
 
 --
 -- Indexes for dumped tables
@@ -228,7 +239,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `events`
 --
@@ -243,12 +254,12 @@ ALTER TABLE `event_categories`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -9,6 +9,12 @@
  * Core: General Layout Style
  * -------------------------
  */
+
+ /* For displaying events */
+ .d-none{
+  /* display: none; */
+ }
+ /* For displaying events */
 html,
 body {
   height: 100%;

@@ -4,26 +4,27 @@
 <main>
     <div class="container">
         <div class="row justify-content-center">
-            <?php
-                if(isset($_SESSION['success'])){
-                    echo "
-                        <div class='alert alert-success alert-dismissible fade show'>                                      
-                            <p>".$_SESSION['success']."</p> 
-                        </div>
-                    ";
-                    unset($_SESSION['success']);
-                }
-                if(isset($_SESSION['error'])){
-                    echo "
-                        <div class='alert alert-danger alert-dismissible fade show'>                                      
-                            <p>".$_SESSION['error']."</p> 
-                        </div>
-                    ";
-                    unset($_SESSION['error']);
-                }
-            ?>
             <div class="col-lg-7">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <?php
+                        session_start();
+                        if(isset($_SESSION['success'])){
+                            echo "
+                                <div class='alert alert-success alert-dismissible fade show'>                                      
+                                    <p>".$_SESSION['success']."</p> 
+                                </div>
+                            ";
+                            unset($_SESSION['success']);
+                        }
+                        if(isset($_SESSION['error'])){
+                            echo "
+                                <div class='alert alert-danger alert-dismissible fade show'>                                      
+                                    <p>".$_SESSION['error']."</p> 
+                                </div>
+                            ";
+                            unset($_SESSION['error']);
+                        }
+                    ?>
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                     <div class="card-body">
                         <form method = 'POST' action = "../includes/validation.php">

@@ -11,7 +11,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Pending Booked Service
+                All events booking status
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -41,11 +41,17 @@
                     </tfoot>
                     <?php 
                         $c_id = $_SESSION['user'];
+                        //SELECT * FROM `bookings` INNER join events ON bookings.event_id = events.event_id INNER JOIN users ON users.customer_id = bookings.customer_id INNER JOIN event_categories ON bookings.category_id = event_categories.category_id WHERE bookings.customer_id
+                        //SELECT * FROM `bookings` INNER join events 
+                        //ON bookings.event_id = events.event_id INNER JOIN users 
+                        //ON users.customer_id = bookings.customer_id INNER JOIN event_categories
+                        //ON event_categories.event_id = bookings.event_id
+                        //WHERE bookings.customer_id =
                         $sql = 'SELECT * FROM `bookings` INNER join events 
                         ON bookings.event_id = events.event_id INNER JOIN users 
-                        ON users.customer_id = bookings.customer_id INNER JOIN event_categories
-                        ON event_categories.event_id = bookings.event_id
-                        WHERE bookings.customer_id = '."$c_id".'';
+                        ON users.customer_id = bookings.customer_id INNER JOIN event_categories 
+                        ON bookings.category_id = event_categories.category_id 
+                        WHERE (bookings.customer_id = '."$c_id".' AND event_categories.category_id = bookings.category_id) ORDER BY (status)';
                         if (mysqli_query($conn, $sql)) {
                         echo "";
                         } else {
@@ -97,9 +103,13 @@
                             </td>
                             <td>
                                 <?php 
-                                    if($row['date_booked'] == 0){
-                                        echo "Pending";
-                                    }else{ echo "Approved";}
+                                    if($row['status'] == 0){
+                                        echo "<div class = "."btn-primary".">Pending</div>";
+                                    }else if($row['status'] == 1){
+                                        echo "<div class = "."btn-success".">Approved</div>";
+                                    }else{
+                                        echo "<div class = "."btn-danger".">Cancelled</div>";
+                                    }
                                 ?>
                             </td>
                             <!-- <td>

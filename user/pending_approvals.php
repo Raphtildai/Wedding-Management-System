@@ -46,7 +46,7 @@
                         ON bookings.event_id = events.event_id INNER JOIN users 
                         ON users.customer_id = bookings.customer_id JOIN event_categories
                         ON event_categories.event_id = events.event_id
-                        WHERE (bookings.customer_id = '."$c_id".' AND status = 0 )';
+                        WHERE (bookings.customer_id = '."$c_id".' AND status = 0 AND event_categories.category_id = bookings.category_id)';
                         if (mysqli_query($conn, $sql)) {
                         echo "";
                         } else {
