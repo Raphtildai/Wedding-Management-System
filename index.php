@@ -26,7 +26,6 @@
     <nav class = "navbar navbar-expand-sm bg-light navbar-light sticky-top">
         <ul class = "navbar-nav">
             <li class = "nav-item active"><a href="index.php" class = "nav-link">Home</a></li>
-            <li class = "nav-item"><a href="index.php" class = "nav-link">Home</a></li>
             <li class = "nav-item"><a href="index.php" class = "nav-link">About Us</a></li>
             <li class = "nav-item"><a href="index.php" class = "nav-link">Contact Us</a></li>
         </ul>
@@ -128,7 +127,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Wedding MGT System 2022</div>
+                        <div class="text-muted">Copyright &copy; Wedding MGT System 2023</div>
                         <!-- <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
